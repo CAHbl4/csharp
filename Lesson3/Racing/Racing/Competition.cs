@@ -1,13 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Racing
 {
     public class Competition
     {
         private Track track;
-        private Car winner;
-        private List<Car> result;
+        private List<Car> result = new List<Car>();
         public Track Track
         {
             get { return track; }
@@ -27,6 +29,28 @@ namespace Racing
         public void Start()
         {
             track.StartRace();
+        }
+
+        public void DrawResults()
+        {
+            for (int i = 0; i < (result.Count < 3 ?result.Count:3); i++)
+            {
+                StringBuilder str = new StringBuilder();
+                switch (i)
+                {
+                    case 0:
+                        str.Append("1st place - ");
+                        break;
+                    case 1:
+                        str.Append("2nd place - ");
+                        break;
+                    case 2:
+                        str.Append("3rd place - ");
+                        break;
+                }
+                str.Append(result[i]);
+                Console.WriteLine(str);
+            }
         }
 
     }

@@ -6,14 +6,23 @@ namespace Racing
     {
         private double acceleration;
         private double maxSpeed;
+        private ConsoleColor color;
+        private static Random rnd = new Random();
 
         public Car(string name, double maxSpeed = 0, double acceleration = 0)
         {
+            
+            color = (ConsoleColor) rnd.Next(1, 15);
             Name = name;
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             CurrentSpeed = 0;
             Status = CarStatus.Ready;
+        }
+
+        public ConsoleColor Color
+        {
+            get { return color; }
         }
 
         public CarStatus Status { get; private set; }
@@ -62,14 +71,31 @@ namespace Racing
                     Status = CarStatus.Moving;
                     break;
                 case CarStatus.Moving:
-                    if (CurrentSpeed < maxSpeed/2)
+                    if (rnd.Next(0, 99) < Consts.ChanceToCrash)
+                    {
+                        Status = CarStatus.Destroyed;
+                        CurrentSpeed = 0;
+                    }
+                    else if (rnd.Next(0,99) < Consts.DeccelerateChance)
+                    {
+                        double penalty = (100 - rnd.Next(1, Consts.MaxDeccelerate)) / 100D;
+                        CurrentSpeed *= penalty;
+                    }
+                    else if (rnd.Next(0, 99) < Consts.BonusAccelerateChance)
+                    {
+                        double bonus = (100 + rnd.Next(1, Consts.MaxAccelerateBonus)) / 100D;
+                        CurrentSpeed *= bonus;
+                    }
+                    else if (CurrentSpeed < maxSpeed / 2)
                     {
                         CurrentSpeed += acceleration;
                     }
-                    else if (CurrentSpeed < maxSpeed)
+                    else if (CurrentSpeed <= maxSpeed)
                     {
-                        CurrentSpeed += maxSpeed/(maxSpeed - CurrentSpeed)*acceleration;
+                        CurrentSpeed += acceleration * (maxSpeed - CurrentSpeed) / maxSpeed;
                     }
+                    if (CurrentSpeed > MaxSpeed)
+                        CurrentSpeed = MaxSpeed;
                     break;
             }
         }
@@ -82,7 +108,7 @@ namespace Racing
 
         public override string ToString()
         {
-            return Name[1].ToString();
+            return Name;
         }
     }
 }
