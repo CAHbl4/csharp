@@ -10,7 +10,7 @@ namespace Racing
     {
         public const int CarMaxSpeed = 166;
         public const int CarMaxAcceleration = 30;
-        public const int ChanceToCrash = 1;
+        public const double ChanceToCrash = 0.3;
         public const int BonusAccelerateChance = 20;
         public const int MaxAccelerateBonus = 25;
         public const int DeccelerateChance = 10;

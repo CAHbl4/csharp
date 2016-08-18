@@ -64,7 +64,6 @@ namespace Racing
                         c.Position = Length;
                         c.Car.Finish();
                         OnCarFinish(c.Car);
-                        Console.WriteLine("{0} Finished", c.Car.Name);
                     }
                 }
                 Console.Clear();
@@ -87,7 +86,7 @@ namespace Racing
             int consoleWidth = Console.WindowWidth - 1;
             StringBuilder border = new StringBuilder(consoleWidth);
             StringBuilder track = new StringBuilder(consoleWidth);
-            border.Append('┄', consoleWidth);
+            border.Append('-', consoleWidth);
             Console.WriteLine(border);
             for (int i = 0; i < cars.Count; i++)
             {
