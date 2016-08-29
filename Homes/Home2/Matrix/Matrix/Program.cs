@@ -10,23 +10,52 @@ namespace Matrix
     {
         static void Main(string[] args)
         {
-            Matrix m1 = new Matrix();
-            Matrix m2 = new Matrix(
-            new int[4,4]
+            Matrix A = new Matrix(new int[,]
             {
-                {-1,-2,-3,4},
-                {4,3,2,1},
-                {5,6,7,8},
-                {8,7,6,5}
+                {1, 2, 3, 4},
+                {4, 3, 2, 1},
+                {5, 6, 7, 8},
+                {8, 7, 6, 5}
             });
 
-            Console.WriteLine(m1 + "\n");
-            Console.WriteLine(m2);
+            Matrix B = new Matrix(new int[,]
+            {
+                {1, 1, 1, 1},
+                {2, 0, 70, 2},
+                {3, 3, 0, 3},
+                {4, 4, 4, 4}
+            });
 
-            Console.WriteLine(m1.SumDiag);
+            Console.WriteLine("Matrix A:");
+            Console.WriteLine(A);
+
+            Console.WriteLine(new String('-',10));
+
+            Console.WriteLine("Matrix B:");
+            Console.WriteLine(B);
+
+            if (A.SumPositive() > B.SumPositive())
+            {
+                for (int i = 0; i < B.GetLength(0); i++)
+                {
+                    for (int j = 0; j < B.GetLength(1); j++)
+                    {
+                        if (B[i, j] == 0)
+                            B[i, j] = B.SumDiag;
+                    }
+                }
+
+                Console.WriteLine("===== Result =====");
+                Console.WriteLine("Matrix B:");
+                Console.WriteLine(B);
+            }
+            else
+            {
+                Console.WriteLine("===== Result =====");
+                Console.WriteLine("Sum diag matrix A = " + A.SumDiag);
+            }
 
             Console.ReadKey();
-
         }
     }
 }
