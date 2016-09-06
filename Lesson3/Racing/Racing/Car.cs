@@ -71,7 +71,7 @@ namespace Racing
                     Status = CarStatus.Moving;
                     break;
                 case CarStatus.Moving:
-                    if (rnd.Next(0, 99) < Consts.ChanceToCrash)
+                    if (rnd.Next(0, 10000)/100D < Consts.ChanceToCrash)
                     {
                         Status = CarStatus.Destroyed;
                         CurrentSpeed = 0;
