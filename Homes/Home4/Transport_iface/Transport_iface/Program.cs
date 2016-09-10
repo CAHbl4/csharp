@@ -39,6 +39,14 @@ namespace Transport_iface
                 item.ShowInfo();
             }
 
+            Array.Sort(t);
+
+            Console.WriteLine();
+            foreach (var item in t)
+            {
+                item.ShowInfo();
+            }
+
             Console.WriteLine();
 
             Console.WriteLine("Flight Number\t" + PlaneSeatTypes.Business);

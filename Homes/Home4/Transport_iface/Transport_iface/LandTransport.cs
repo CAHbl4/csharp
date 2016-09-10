@@ -70,5 +70,15 @@ namespace Transport_iface
         }
 
         public abstract void ShowInfo();
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            ITransport other = obj as ITransport;
+            if (obj != null)
+                return this.GetType().Name.CompareTo(other.GetType().Name);
+            else throw new ArgumentException("Object is not a Transport");
+        }
     }
 }

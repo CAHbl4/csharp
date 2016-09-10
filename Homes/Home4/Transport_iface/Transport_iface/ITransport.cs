@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Transport_iface
 {
-    interface ITransport
+    interface ITransport: IComparable
     {
         int FreeSeats { get; }
 
