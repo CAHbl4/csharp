@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TableGenerator;
 using TransportManager.BL;
 
 namespace TransportManager
@@ -18,17 +17,17 @@ namespace TransportManager
             bus.AddSeats(busHardSeat, 15);
 
             Train train = new Train();
-            SeatType trainCommonSeat = new SeatType() { Name = "Common" };
-            SeatType trainLuxSeat = new SeatType() { Name = "Common" };
+            SeatType trainCommonSeat = new SeatType {Name = "Common"};
+            SeatType trainLuxSeat = new SeatType {Name = "Common"};
 
             train.AddCoach(new Coach(trainCommonSeat, 30));
             train.AddCoach(new Coach(trainCommonSeat, 45));
             train.AddCoach(new Coach(trainLuxSeat, 10));
 
             Plane plane = new Plane();
-            SeatType planeFirstClass = new SeatType() {Name = "First"};
-            SeatType planeEconomyClass = new SeatType() {Name = "Economy"};
-            SeatType planeBusinessClass = new SeatType() {Name = "Business"};
+            SeatType planeFirstClass = new SeatType {Name = "First"};
+            SeatType planeEconomyClass = new SeatType {Name = "Economy"};
+            SeatType planeBusinessClass = new SeatType {Name = "Business"};
 
             plane.AddSeats(planeFirstClass, 10);
             plane.AddSeats(planeEconomyClass, 15);
@@ -57,7 +56,10 @@ namespace TransportManager
             flights[2].BuyTicket(planeBusinessClass, 20);
 
             InfoBoard.DrawFlightBoard(flights);
-            InfoBoard.DrawTicketsInfo(flights.First(x=> x.FlightNumber == "256"));
+            flights.Sort();
+
+            InfoBoard.DrawFlightBoard(flights);
+            InfoBoard.DrawTicketsInfo(flights.First(x => x.FlightNumber == "256"));
 
             Console.ReadKey();
         }

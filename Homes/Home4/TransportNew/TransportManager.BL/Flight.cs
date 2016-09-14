@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TransportManager.BL
@@ -62,6 +63,13 @@ namespace TransportManager.BL
             if (!_freeSeats.ContainsKey(seatType) || (_freeSeats[seatType] - count < 0)) return false;
             _freeSeats[seatType] -= count;
             return true;
+        }
+
+
+        public int CompareTo(IFlight other)
+        {
+            if (Type != null) if (other != null) return Type.CompareTo(other.Type);
+            throw  new ArgumentException();
         }
     }
 }
