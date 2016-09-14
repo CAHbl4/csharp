@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoBoard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TableGenerator\TableGenerator.csproj">
+      <Project>{6bd5d7d6-e09d-4dd2-9d02-434243f0efb8}</Project>
+      <Name>TableGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TransportManager.BL\TransportManager.BL.csproj">
       <Project>{18b427b3-892c-4813-a44b-e2ded9c9e0df}</Project>
       <Name>TransportManager.BL</Name>

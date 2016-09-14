@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TransportManager.BL
 {
-    public class Flight : IFlightInfo, ITicketService
+    public class Flight : IFlight
     {
         private readonly Dictionary<SeatType, int> _freeSeats;
         private readonly Dictionary<SeatType, decimal> _seatTypes;
@@ -15,6 +14,11 @@ namespace TransportManager.BL
             _transport = transport;
             _seatTypes = new Dictionary<SeatType, decimal>();
             _freeSeats = new Dictionary<SeatType, int>();
+            foreach (SeatType seatType in _transport.GeSeatTypes())
+            {
+                _seatTypes.Add(seatType, 0);
+                _freeSeats.Add(seatType, _transport.GetMaxSeats(seatType));
+            }
         }
 
         public string Type => _transport.Type;
@@ -33,7 +37,7 @@ namespace TransportManager.BL
             return _freeSeats[seatType];
         }
 
-        public object GetFreeSeats()
+        public int GetTotalFreeSeats()
         {
             return _freeSeats.Sum(x => x.Value);
         }
@@ -48,7 +52,7 @@ namespace TransportManager.BL
             if (!_seatTypes.ContainsKey(seatType))
             {
                 _seatTypes.Add(seatType, cost);
-                _freeSeats.Add(seatType,_transport.GetMaxSeats(seatType));
+                _freeSeats.Add(seatType, _transport.GetMaxSeats(seatType));
             }
             else _seatTypes[seatType] = cost;
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TransportManager.BL.Test")]
+[assembly: AssemblyTitle("TableGenerator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TransportManager.BL.Test")]
+[assembly: AssemblyProduct("TableGenerator")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("81893d98-7509-4ab4-bb32-45e0d9d32a23")]
+[assembly: Guid("6bd5d7d6-e09d-4dd2-9d02-434243f0efb8")]
 
 // Version information for an assembly consists of the following four values:
 //

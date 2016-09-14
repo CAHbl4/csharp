@@ -6,6 +6,7 @@ namespace TransportManager.BL
     {
         IEnumerable<SeatType> GetSeatTypes();
         int GetFreeSeats(SeatType seatType);
+        int GetTotalFreeSeats();
         decimal GetTicketCost(SeatType seatType);
         void SetTicketCost(SeatType seatType, decimal cost);
         bool BuyTicket(SeatType seatType, int count);

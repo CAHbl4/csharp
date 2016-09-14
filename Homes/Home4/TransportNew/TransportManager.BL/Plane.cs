@@ -2,11 +2,11 @@
 
 namespace TransportManager.BL
 {
-    public class Bus : BasicTransport
+    public class Plane : BasicTransport
     {
         private readonly Dictionary<SeatType, int> _maxSeats = new Dictionary<SeatType, int>();
 
-        public override string Type => "Bus";
+        public override string Type => "Plane";
 
         public void AddSeats(SeatType seatType, int count)
         {
