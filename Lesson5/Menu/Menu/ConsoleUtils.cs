@@ -1,5 +1,4 @@
 ﻿using System;
-using Menu.Properties;
 
 namespace Menu
 {

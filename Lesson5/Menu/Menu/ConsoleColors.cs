@@ -1,4 +1,4 @@
-﻿namespace Menu.Properties
+﻿namespace Menu
 {
     public enum ConsoleColors
     {

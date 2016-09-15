@@ -2,64 +2,81 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Menu.Properties
+namespace Menu
 {
     public class SubMenu
     {
-        private readonly List<MenuItem> items;
-        private MenuItem selected;
-        
+        private readonly List<MenuItem> _items;
+        private MenuItem _selected;
+
         public SubMenu(string text = "")
         {
-            items = new List<MenuItem>();
+            _items = new List<MenuItem>();
             Text = text;
-            selected = null;
+            _selected = null;
         }
 
         public string Text { get; set; }
+        public event EventHandler<EventArgs> Executed;
 
-        public void AddItem(MenuItem item)
+        private void OnExecute(EventArgs e)
         {
-            items.Add(item);
+            var handler = Executed;
+            handler?.Invoke(this, e);
+        }
+
+        public void Execute()
+        {
+            if (_selected != null)
+                _selected.Execute();
+            else
+                OnExecute(new EventArgs());
+        }
+
+        public MenuItem GetItem(string name)
+        {
+            return _items.First(x => x.Text == name);
         }
 
         public void AddItem(string text)
         {
-            AddItem(new MenuItem(text));
+            if (_items.Count == 0) _items.Add(new MenuItem(text));
+            else if (_items.Any(x => x.Text != text))
+                _items.Add(new MenuItem(text));
         }
 
         public void SelectNext()
         {
-            if (items.LastOrDefault() != selected)
-                selected = items[items.FindIndex(x => x == selected) + 1];
+            if (_items.LastOrDefault() != _selected)
+                _selected = _items[_items.FindIndex(x => x == _selected) + 1];
         }
 
         public void SelectPrev()
         {
-            if (selected != null)
-            {
-                selected = items.FirstOrDefault() != selected
-                    ? items[items.FindIndex(x => x == selected) - 1]
-                    : null;    
-            }
-            
+            if (_selected != null)
+                _selected = _items.FirstOrDefault() != _selected
+                    ? _items[_items.FindIndex(x => x == _selected) - 1]
+                    : null;
+        }
+
+        public void ResetSelected()
+        {
+            _selected = null;
         }
 
         public void Draw(int spaceCount)
         {
-            if (selected != null)
+            if (_selected == null) return;
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+            string space = new string(' ', spaceCount);
+            foreach (MenuItem menuItem in _items)
             {
-                ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
-                string space = new string(' ', spaceCount);
-                foreach (var menuItem in items)
-                {
-                    Console.Write(space);
-                    if (menuItem == selected)
-                        ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
-                    Console.WriteLine(" {0} ", menuItem);
-                    if (menuItem == selected)
-                        ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
-                }
+                Console.Write(space);
+                if (menuItem == _selected)
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
+                Console.WriteLine($" {menuItem} ");
+                if (menuItem == _selected)
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
             }
         }
 
