@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Menu.Properties;
+using System.Runtime.Remoting.Messaging;
 
 namespace Menu
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Menu menu = new Menu();
 
@@ -18,15 +14,28 @@ namespace Menu
             file.AddItem("Save");
             file.AddItem("Exit");
 
+            file.GetItem("Exit").Executed += (obj, e) => Environment.Exit(0);
+
             SubMenu edit = new SubMenu("Edit");
             edit.AddItem("Cut");
             edit.AddItem("Copy");
             edit.AddItem("Paste");
 
+            SubMenu about = new SubMenu("About");
+            about.Executed += AboutHandler;
+
             menu.AddItem(file);
             menu.AddItem(edit);
-            menu.AddItem("About");
+            menu.AddItem(about);
             menu.Execute();
-         }
+        }
+
+        public static void AboutHandler(object sender, EventArgs e)
+        {
+            Console.Clear();
+            Console.WriteLine("Simple Menu Program");
+            Console.ReadKey();
+        }
+
     }
 }
