@@ -10,5 +10,7 @@ namespace UI
         public const ConsoleColor ActiveBackground = ConsoleColor.Yellow;
         public const ConsoleColor InvertedText = ConsoleColor.DarkBlue;
         public const ConsoleColor InvertedBackground = ConsoleColor.White;
+        public const ConsoleColor InteractiveText = ConsoleColor.Black;
+        public const ConsoleColor InteractiveBackground = ConsoleColor.Cyan;
     }
 }

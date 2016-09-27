@@ -16,7 +16,7 @@ namespace Task1
             file.AddItem("Exit", form.Dispose);
 
             SubMenu edit = new SubMenu("Edit");
-            edit.AddItem("Add record");
+            edit.AddItem("Add record", Add);
 
             menu.AddItem(file);
             menu.AddItem(edit);
@@ -28,12 +28,33 @@ namespace Task1
             form.Execute();
         }
 
+        static void Add()
+        {
+            Form form = new Form {Title = "Add", Width = 40, Height = 15, HasBorder = true};
+
+            Button buttonOK = new Button("OK", form.Dispose) {X = 18, Y = 13};
+
+            Label text1 = new Label {X = 1, Y = 1, Enabled = false, Height = 1, Width = 8, Text = "Name"};
+            Edit edit1 = new Edit {X = 10, Y = 1, Enabled = true, Width = 20};
+
+            Label text2 = new Label {X = 1, Y = 2, Enabled = false, Height = 1, Width = 8, Text = "Surname"};
+            Edit edit2 = new Edit {X = 10, Y = 2, Enabled = true, Width = 20};
+
+            form.AddElement(text1);
+            form.AddElement(edit1);
+            form.AddElement(text2);
+            form.AddElement(edit2);
+            form.AddElement(buttonOK);
+
+            form.Init();
+            form.Execute();
+        }
+
         static void About()
         {
             Form form = new Form {Title = "About", Width = 40, Height = 15, HasBorder = true};
 
-            Button buttonOK = new Button("OK", form.Dispose) {X = 14, Y = 13};
-            Button buttonCancel = new Button("Cancel", form.Dispose) {X = 22, Y = 13};
+            Button buttonOK = new Button("OK", form.Dispose) {X = 18, Y = 13};
             Label text = new Label
             {
                 X = 1,
@@ -52,7 +73,6 @@ namespace Task1
 
             form.AddElement(text);
             form.AddElement(buttonOK);
-            form.AddElement(buttonCancel);
 
             form.Init();
             form.Execute();

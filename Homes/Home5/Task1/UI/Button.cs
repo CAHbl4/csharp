@@ -13,8 +13,6 @@ namespace UI
             _action = action;
         }
 
-        public override bool UseArrows => false;
-
         public override void Draw(int x, int y)
         {
             Console.SetCursorPosition(X + x, Y + y);
@@ -23,14 +21,21 @@ namespace UI
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }
 
-        public override void OnKeyPress(ConsoleKey key)
+        public override void SetCursor(int x, int y)
         {
-            switch (key)
+            Console.SetCursorPosition(X + x, Y + y);
+            Console.CursorVisible = false;
+        }
+
+        public override bool OnKeyPress(ConsoleKeyInfo cki)
+        {
+            switch (cki.Key)
             {
                 case ConsoleKey.Enter:
                     _action?.Invoke();
-                    break;
+                    return true;
             }
+            return false;
         }
     }
 }

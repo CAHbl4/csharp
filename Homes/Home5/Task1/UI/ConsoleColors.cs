@@ -4,6 +4,7 @@
     {
         Default,
         Active,
-        Inverted
+        Inverted,
+        Interactive
     }
 }

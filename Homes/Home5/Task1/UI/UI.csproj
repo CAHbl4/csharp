@@ -45,6 +45,7 @@
     <Compile Include="ConsoleUtils.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="Edit.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Menu\Menu.cs" />

@@ -14,8 +14,6 @@ namespace UI.Menu
             _items = new List<SubMenu>();
         }
 
-        public override bool UseArrows => true;
-
         public override void Draw(int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -34,29 +32,36 @@ namespace UI.Menu
             _selected?.Draw(x, y);
         }
 
-        public override void OnKeyPress(ConsoleKey key)
+        public override void SetCursor(int x, int y)
         {
-            switch (key)
+            Console.SetCursorPosition(x + _items.Sum(i => i.Text.Length + 2) + 1, y);
+            Console.CursorVisible = false;
+        }
+
+        public override bool OnKeyPress(ConsoleKeyInfo cki)
+        {
+            switch (cki.Key)
             {
                 case ConsoleKey.LeftArrow:
                     SelectPrev();
-                    break;
+                    return true;
                 case ConsoleKey.RightArrow:
                     SelectNext();
-                    break;
+                    return true;
                 case ConsoleKey.UpArrow:
                     _selected.SelectPrev();
-                    break;
+                    return true;
                 case ConsoleKey.DownArrow:
                     _selected.SelectNext();
-                    break;
+                    return true;
                 case ConsoleKey.Enter:
                     if ((_selected.Count > 0) && !_selected.HaveSelected)
                         _selected.SelectNext();
                     else
                         _selected.Execute();
-                    break;
+                    return true;
             }
+            return false;
         }
 
         public void AddItem(SubMenu item)

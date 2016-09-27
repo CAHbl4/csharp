@@ -7,7 +7,7 @@ namespace UI
     public class Form
     {
         readonly List<IElement> _elements = new List<IElement>();
-        IElement _active;
+        int _active;
         bool _dispose;
 
         public Form()
@@ -31,8 +31,8 @@ namespace UI
         public void Init()
         {
             if (_elements.Count > 0)
-                _active = _elements.First(x => x.Enabled);
-            _active.Active = true;
+                _active = _elements.FindIndex(x => x.Enabled);
+            _elements[_active].Active = true;
             Console.CursorVisible = false;
             Console.ForegroundColor = Constants.DefaultText;
             Console.BackgroundColor = Constants.DefaultBackground;
@@ -54,7 +54,7 @@ namespace UI
             foreach (IElement element in _elements)
                 if (element.Visible)
                     element.Draw(x, y);
-            Console.SetCursorPosition(0, 0);
+            _elements[_active].SetCursor(x, y);
         }
 
         public void Dispose()
@@ -72,35 +72,56 @@ namespace UI
                 ConsoleKeyInfo cki = Console.ReadKey(false);
                 if ((cki.Modifiers == ConsoleModifiers.Alt) && (cki.Key == ConsoleKey.X))
                     break;
-                if (!_active.UseArrows)
-                    switch (cki.Key)
-                    {
-                        case ConsoleKey.UpArrow:
-                        case ConsoleKey.LeftArrow:
-                            Select(SelectDirection.Prev);
-                            break;
-                        case ConsoleKey.DownArrow:
-                        case ConsoleKey.RightArrow:
-                            Select(SelectDirection.Next);
-                            break;
-                        default:
-                            _active.OnKeyPress(cki.Key);
-                            break;
-                    }
-                else
-                    _active.OnKeyPress(cki.Key);
+                if (_elements[_active].OnKeyPress(cki)) continue;
+                switch (cki.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                    case ConsoleKey.LeftArrow:
+                        Select(SelectDirection.Prev);
+                        break;
+                    case ConsoleKey.DownArrow:
+                    case ConsoleKey.RightArrow:
+                    case ConsoleKey.Enter:
+                        Select(SelectDirection.Next);
+                        break;
+                    case ConsoleKey.Tab:
+                        Select(SelectDirection.Next, true);
+                        break;
+                }
             }
         }
 
-        public void Select(SelectDirection direction)
+        public void Select(SelectDirection direction, bool cyclic = false)
         {
-            if ((direction == SelectDirection.Next) && (_elements.Last(x => x.Enabled) == _active)) return;
-            if ((direction == SelectDirection.Prev) && (_elements.First(x => x.Enabled) == _active)) return;
-            _active.Active = false;
-            _active = direction == SelectDirection.Next
-                ? _elements[_elements.FindIndex(x => x == _active) + 1]
-                : _elements[_elements.FindIndex(x => x == _active) - 1];
-            _active.Active = true;
+            if (cyclic)
+            {
+                if ((direction == SelectDirection.Next)
+                    && (_elements[_active] == _elements.Last(x => x.Enabled)))
+                    Select(_elements.FindIndex(x => x.Enabled));
+                else if ((direction == SelectDirection.Prev)
+                         && (_elements[_active] == _elements.First(x => x.Enabled)))
+                    Select(_elements.FindLastIndex(x => x.Enabled));
+                else Select(direction);
+            }
+            else
+            {
+                if ((direction == SelectDirection.Next)
+                    && (_elements[_active] == _elements.Last(x => x.Enabled)))
+                    return;
+                if ((direction == SelectDirection.Prev)
+                    && (_elements[_active] == _elements.First(x => x.Enabled)))
+                    return;
+                Select(direction == SelectDirection.Next
+                    ? _elements.FindIndex(_active + 1, x => x.Enabled)
+                    : _elements.FindLastIndex(_active - 1, _active - 1, x => x.Enabled));
+            }
+        }
+
+        public void Select(int index)
+        {
+            _elements[_active].Active = false;
+            _active = index;
+            _elements[_active].Active = true;
         }
     }
 }
