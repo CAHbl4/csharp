@@ -4,19 +4,19 @@ namespace UI
 {
     public class Button : BasicElement
     {
-        readonly Action _action;
         readonly string _text;
 
-        public Button(string text, Action action)
+        public Button(string text)
         {
             _text = text;
-            _action = action;
         }
+
+        public event EventHandler<EventArgs> ButtonClick;
 
         public override void Draw(int x, int y)
         {
             Console.SetCursorPosition(X + x, Y + y);
-            ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.Active : ConsoleColors.Inverted);
+            ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.ActiveInverted : ConsoleColors.Inverted);
             Console.Write($" {_text} ");
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }
@@ -32,7 +32,7 @@ namespace UI
             switch (cki.Key)
             {
                 case ConsoleKey.Enter:
-                    _action?.Invoke();
+                    ButtonClick?.Invoke(this, EventArgs.Empty);
                     return true;
             }
             return false;

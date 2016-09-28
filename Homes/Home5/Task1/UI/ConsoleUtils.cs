@@ -17,12 +17,16 @@ namespace UI
                     Console.ForegroundColor = Constants.DefaultText;
                     break;
                 case ConsoleColors.Inverted:
-                    Console.BackgroundColor = Constants.InvertedBackground;
-                    Console.ForegroundColor = Constants.InvertedText;
+                    Console.BackgroundColor = Constants.DefaultText;
+                    Console.ForegroundColor = Constants.DefaultBackground;
                     break;
                 case ConsoleColors.Interactive:
                     Console.BackgroundColor = Constants.InteractiveBackground;
                     Console.ForegroundColor = Constants.InteractiveText;
+                    break;
+                case ConsoleColors.ActiveInverted:
+                    Console.BackgroundColor = Constants.ActiveText;
+                    Console.ForegroundColor = Constants.ActiveBackground;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(colors), colors, null);

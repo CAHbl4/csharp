@@ -3,8 +3,9 @@
     public enum ConsoleColors
     {
         Default,
-        Active,
         Inverted,
+        Active,
+        ActiveInverted,
         Interactive
     }
 }

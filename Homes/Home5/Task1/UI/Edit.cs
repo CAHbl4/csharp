@@ -23,7 +23,7 @@ namespace UI
         public override void Draw(int x, int y)
         {
             Console.SetCursorPosition(X + x, Y + y);
-            ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.Active : ConsoleColors.Interactive);
+            ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.ActiveInverted : ConsoleColors.Interactive);
             Console.Write(_value.ToString().PadRight(Width));
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }

@@ -4,19 +4,18 @@ namespace UI.Menu
 {
     public class MenuItem
     {
-        readonly Action _action;
+        public event EventHandler<EventArgs> MenuItemClick;
 
-        public MenuItem(string text = "", Action action = null)
+        public MenuItem(string text = "")
         {
             Text = text;
-            _action += action;
         }
 
         public string Text { get; set; }
 
         public void Execute()
         {
-            _action?.Invoke();
+            MenuItemClick?.Invoke(this, EventArgs.Empty);
         }
 
         public override string ToString()

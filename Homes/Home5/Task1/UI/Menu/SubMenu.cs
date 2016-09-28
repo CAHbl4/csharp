@@ -6,30 +6,25 @@ namespace UI.Menu
 {
     public class SubMenu
     {
-        readonly Action _action;
-        readonly List<MenuItem> _items;
+        readonly List<MenuItem> _items = new List<MenuItem>();
         MenuItem _selected;
 
-        public SubMenu(string text = "", Action action = null)
+        public event EventHandler<EventArgs> SubMenuClick;
+
+        public SubMenu(string text = "")
         {
             Text = text;
-            _items = new List<MenuItem>();
-            _selected = null;
-            _action += action;
         }
 
         public bool HaveSelected => _selected != null;
         public int Count => _items.Count;
         public string Text { get; set; }
 
+        public int Width => _items.Max(x => x.Text.Length);
+
         public void AddItem(MenuItem item)
         {
             _items.Add(item);
-        }
-
-        public void AddItem(string text, Action action = null)
-        {
-            AddItem(new MenuItem(text, action));
         }
 
         public void SelectNext()
@@ -49,16 +44,18 @@ namespace UI.Menu
         public void Draw(int x, int y)
         {
             if (_selected == null) return;
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Interactive);
             int i = 0;
             foreach (MenuItem menuItem in _items)
             {
                 Console.SetCursorPosition(x, y + i++);
                 if (menuItem == _selected)
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
-                Console.Write($" {menuItem} ");
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.ActiveInverted);
+                Console.Write($" {menuItem.Text.PadRight(Width)} ");
                 if (menuItem == _selected)
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Interactive);
             }
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }
 
         public override string ToString()
@@ -74,7 +71,7 @@ namespace UI.Menu
         public void Execute()
         {
             if (_selected == null)
-                _action?.Invoke();
+                SubMenuClick?.Invoke(this, EventArgs.Empty);
             else
                 _selected.Execute();
         }

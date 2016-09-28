@@ -6,13 +6,8 @@ namespace UI.Menu
 {
     public class Menu : BasicElement
     {
-        readonly List<SubMenu> _items;
+        readonly List<SubMenu> _items = new List<SubMenu>();
         SubMenu _selected;
-
-        public Menu()
-        {
-            _items = new List<SubMenu>();
-        }
 
         public override void Draw(int x, int y)
         {
@@ -23,7 +18,7 @@ namespace UI.Menu
                 {
                     x = Console.CursorLeft;
                     y = Console.CursorTop + 1;
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.ActiveInverted);
                 }
                 Console.Write($" {menuItem} ");
                 if (menuItem == _selected)
@@ -69,11 +64,6 @@ namespace UI.Menu
             _items.Add(item);
             if (_items.Count == 1)
                 _selected = _items[0];
-        }
-
-        public void AddItem(string text, Action action = null)
-        {
-            AddItem(new SubMenu(text, action));
         }
 
         public void SelectNext()

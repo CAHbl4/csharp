@@ -67,12 +67,20 @@ namespace UI
             while (true)
             {
                 if (_dispose)
-                    break;
+                    return;
+
                 Draw();
+
                 ConsoleKeyInfo cki = Console.ReadKey(false);
+
                 if ((cki.Modifiers == ConsoleModifiers.Alt) && (cki.Key == ConsoleKey.X))
-                    break;
+                {
+                    Dispose();
+                    continue;
+                }
+
                 if (_elements[_active].OnKeyPress(cki)) continue;
+
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
@@ -113,12 +121,13 @@ namespace UI
                     return;
                 Select(direction == SelectDirection.Next
                     ? _elements.FindIndex(_active + 1, x => x.Enabled)
-                    : _elements.FindLastIndex(_active - 1, _active - 1, x => x.Enabled));
+                    : _elements.FindLastIndex(_active - 1, _active, x => x.Enabled));
             }
         }
 
         public void Select(int index)
         {
+            if (index < 0) return;
             _elements[_active].Active = false;
             _active = index;
             _elements[_active].Active = true;
