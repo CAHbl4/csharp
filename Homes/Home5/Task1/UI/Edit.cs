@@ -7,6 +7,7 @@ namespace UI
     {
         readonly StringBuilder _value = new StringBuilder();
         int _cursorPosition;
+        int _offset;
 
         public string Value
         {
@@ -19,19 +20,79 @@ namespace UI
         }
 
         public int Width { get; set; }
+        public int MaxLength { get; set; }
 
-        public override void Draw(int x, int y)
+        public override void Draw(int x, int y, int width, int height)
         {
-            Console.SetCursorPosition(X + x, Y + y);
+            Console.SetCursorPosition(Right + x, Top + y);
             ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.ActiveInverted : ConsoleColors.Interactive);
-            Console.Write(_value.ToString().PadRight(Width));
+            Console.Write(
+                _value.ToString(
+                    _offset, _value.Length - _offset < Width
+                        ? _value.Length - _offset
+                        : Width).PadRight(Width));
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }
 
         public override void SetCursor(int x, int y)
         {
-            Console.SetCursorPosition(X + x + _cursorPosition, Y + y);
+            Console.SetCursorPosition(Right + x + _cursorPosition, Top + y);
             Console.CursorVisible = true;
+        }
+
+        void Insert(char c)
+        {
+            if (_value.Length >= MaxLength) return;
+            _value.Insert(_cursorPosition + _offset, c);
+            CursorRight();
+        }
+
+        void CursorLeft()
+        {
+            if ((_cursorPosition == 0) && (_offset > 0))
+                _offset--;
+            else if (_cursorPosition > 0)
+                _cursorPosition--;
+        }
+
+        void CursorRight()
+        {
+            if ((_cursorPosition + 1 == Width) && (_offset + Width - 1 < _value.Length))
+                _offset++;
+            else if ((_cursorPosition + 1 != Width) && (_cursorPosition + _offset < _value.Length))
+                _cursorPosition++;
+        }
+
+        void Backspace()
+        {
+            if (_offset + _cursorPosition == 0) return;
+            _value.Remove(_offset + _cursorPosition - 1, 1);
+            CursorLeft();
+        }
+
+        void Delete()
+        {
+            if (_offset + _cursorPosition == _value.Length) return;
+            _value.Remove(_offset + _cursorPosition, 1);
+        }
+
+        void Home()
+        {
+            _cursorPosition = 0;
+            _offset = 0;
+        }
+
+        void End()
+        {
+            if (_value.Length > Width)
+            {
+                _cursorPosition = Width - 1;
+                _offset = _value.Length - Width + 1;
+            }
+            else
+            {
+                _cursorPosition = _value.Length;
+            }
         }
 
         public override bool OnKeyPress(ConsoleKeyInfo cki)
@@ -44,29 +105,32 @@ namespace UI
             switch (cki.Key)
             {
                 case ConsoleKey.RightArrow:
-                    if ((_cursorPosition < Width) && (_cursorPosition < _value.Length))
-                        _cursorPosition++;
+                    CursorRight();
                     return true;
                 case ConsoleKey.LeftArrow:
-                    if (_cursorPosition > 0)
-                        _cursorPosition--;
+                    CursorLeft();
                     return true;
+                case ConsoleKey.Home:
+                    Home();
+                    break;
+                case ConsoleKey.End:
+                    End();
+                    break;
                 case ConsoleKey.Backspace:
-                    if (_cursorPosition > 0)
-                        _value.Remove(_cursorPosition-- - 1, 1);
+                    Backspace();
                     return true;
                 case ConsoleKey.Delete:
-                    if (_cursorPosition < _value.Length)
-                        _value.Remove(_cursorPosition, 1);
+                    Delete();
                     return true;
+
                 case ConsoleKey.Enter:
                 case ConsoleKey.Tab:
+                case ConsoleKey.Escape:
                     return false;
             }
 
             if (cki.KeyChar == '\u0000') return false;
-            if (_value.Length < Width)
-                _value.Insert(_cursorPosition++, cki.KeyChar);
+            Insert(cki.KeyChar);
             return true;
         }
     }

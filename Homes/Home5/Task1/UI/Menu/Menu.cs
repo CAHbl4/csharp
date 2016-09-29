@@ -9,22 +9,25 @@ namespace UI.Menu
         readonly List<SubMenu> _items = new List<SubMenu>();
         SubMenu _selected;
 
-        public override void Draw(int x, int y)
+        public override void Draw(int x, int y, int width, int height)
         {
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             Console.SetCursorPosition(x, y);
+            int selectedOffset = x;
             foreach (SubMenu menuItem in _items)
             {
                 if (menuItem == _selected)
                 {
-                    x = Console.CursorLeft;
-                    y = Console.CursorTop + 1;
+                    selectedOffset = Console.CursorLeft;
                     ConsoleUtils.ConsoleSetColors(ConsoleColors.ActiveInverted);
                 }
                 Console.Write($" {menuItem} ");
                 if (menuItem == _selected)
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             }
-            _selected?.Draw(x, y);
+            Console.Write(new string(' ',width - Console.CursorLeft +x));
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+            _selected?.Draw(selectedOffset, y+1);
         }
 
         public override void SetCursor(int x, int y)

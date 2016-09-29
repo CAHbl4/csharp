@@ -6,41 +6,36 @@ namespace Task1
 {
     public class MainForm : Form
     {
-        public Menu Menu { get; } = new Menu();
+        readonly SubMenu _file = new SubMenu("File");
+        readonly Menu _menu = new Menu();
+
+        readonly MenuItem _load = new MenuItem("Load");
+        readonly MenuItem _save = new MenuItem("Save");
+        readonly SubMenu _about = new SubMenu("About");
+
+        readonly MenuItem _add = new MenuItem("Add record");
+        readonly MenuItem _delete = new MenuItem("Delete record");
+        readonly SubMenu _edit = new SubMenu("Edit");
+        readonly MenuItem _exit = new MenuItem("Exit");
 
         public MainForm()
         {
-            SubMenu file = new SubMenu("File");
+            _file.AddItem(_load);
+            _file.AddItem(_save);
+            _file.AddItem(_exit);
 
-            MenuItem load = new MenuItem("Load");
-            file.AddItem(load);
+            _edit.AddItem(_add);
+            _edit.AddItem(_delete);
 
-            MenuItem save = new MenuItem("Save");
-            file.AddItem(save);
+            _exit.MenuItemClick += MenuExit_click;
+            _add.MenuItemClick += MenuAdd_click;
+            _about.SubMenuClick += MenuAbout_click;
 
-            MenuItem exit = new MenuItem("Exit");
-            exit.MenuItemClick += MenuExit_click;
-            file.AddItem(exit);
+            _menu.AddItem(_file);
+            _menu.AddItem(_edit);
+            _menu.AddItem(_about);
 
-            Menu.AddItem(file);
-
-            SubMenu edit = new SubMenu("Edit");
-
-            MenuItem add = new MenuItem("Add record");
-            add.MenuItemClick += MenuAdd_click;
-            edit.AddItem(add);
-
-            MenuItem delete = new MenuItem("Delete record");
-            edit.AddItem(delete);
-
-            Menu.AddItem(edit);
-
-            SubMenu about = new SubMenu("About");
-            about.SubMenuClick += MenuAbout_click;
-
-            Menu.AddItem(about);
-
-            AddElement(Menu);
+            AddElement(_menu);
         }
 
         void MenuExit_click(object sender, EventArgs e)

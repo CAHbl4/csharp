@@ -5,27 +5,36 @@ namespace Task1
 {
     public class AddForm : Form
     {
-        public AddForm()
-        {
-            ButtonOK.ButtonClick += ButtonOK_click;
+        readonly Edit _edit1 = new Edit {Right = 10, Top = 1, Enabled = true, Width = 20, MaxLength = 100};
+        readonly Edit _edit2 = new Edit {Right = 10, Top = 2, Enabled = true, Width = 20, MaxLength = 10 };
 
-            AddElement(Text1);
-            AddElement(Edit1);
-            AddElement(Text2);
-            AddElement(Edit2);
-            AddElement(ButtonOK);
-        }
+        readonly Label _text1 = new Label {Right = 1, Top = 1, Enabled = false, Height = 1, Width = 8, Text = "Name"};
 
-        public Button ButtonOK { get; } = new Button("OK") {X = 18, Y = 13};
-        public Edit Edit1 { get; } = new Edit {X = 10, Y = 1, Enabled = true, Width = 20};
-        public Edit Edit2 { get; } = new Edit {X = 10, Y = 2, Enabled = true, Width = 20};
-
-        public Label Text1 { get; } = new Label {X = 1, Y = 1, Enabled = false, Height = 1, Width = 8, Text = "Name"};
-
-        public Label Text2 { get; } = new Label {X = 1, Y = 2, Enabled = false, Height = 1, Width = 8, Text = "Surname"}
+        readonly Label _text2 = new Label {Right = 1, Top = 2, Enabled = false, Height = 1, Width = 8, Text = "Surname"}
             ;
 
+        readonly Button _buttonOK = new Button("OK") {Right = 12, Top = 12};
+        readonly Button _buttonCancel = new Button("Cancel") {Right = 17, Top = 12};
+
+        public AddForm()
+        {
+            _buttonOK.ButtonClick += ButtonOK_click;
+            _buttonCancel.ButtonClick += ButtonCancel_click;
+
+            AddElement(_text1);
+            AddElement(_edit1);
+            AddElement(_text2);
+            AddElement(_edit2);
+            AddElement(_buttonOK);
+            AddElement(_buttonCancel);
+        }
+
         void ButtonOK_click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Sample Text");
+        }
+
+        void ButtonCancel_click(object sender, EventArgs e)
         {
             Dispose();
         }

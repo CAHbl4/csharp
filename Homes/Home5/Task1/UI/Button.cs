@@ -13,9 +13,9 @@ namespace UI
 
         public event EventHandler<EventArgs> ButtonClick;
 
-        public override void Draw(int x, int y)
+        public override void Draw(int x, int y, int width, int height)
         {
-            Console.SetCursorPosition(X + x, Y + y);
+            Console.SetCursorPosition(Right + x, Top + y);
             ConsoleUtils.ConsoleSetColors(Active ? ConsoleColors.ActiveInverted : ConsoleColors.Inverted);
             Console.Write($" {_text} ");
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
@@ -23,7 +23,7 @@ namespace UI
 
         public override void SetCursor(int x, int y)
         {
-            Console.SetCursorPosition(X + x, Y + y);
+            Console.SetCursorPosition(Right + x, Top + y);
             Console.CursorVisible = false;
         }
 

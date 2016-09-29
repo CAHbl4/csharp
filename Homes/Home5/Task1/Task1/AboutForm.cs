@@ -5,19 +5,12 @@ namespace Task1
 {
     public class AboutForm : Form
     {
-        public AboutForm()
-        {
-            ButtonOK.ButtonClick += _buttonOKClick;
-            AddElement(Text);
-            AddElement(ButtonOK);
-        }
+        readonly Button _buttonOK = new Button("OK") {Right = 17, Top = 12};
 
-        public Button ButtonOK { get; } = new Button("OK") {X = 18, Y = 13};
-
-        public Label Text { get; } = new Label
+        readonly Label _text = new Label
         {
-            X = 1,
-            Y = 1,
+            Right = 0,
+            Top = 0,
             Enabled = true,
             Height = 10,
             Width = 38,
@@ -29,6 +22,13 @@ namespace Task1
                    " eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident," +
                    " sunt in culpa qui officia deserunt mollit anim id est laborum."
         };
+
+        public AboutForm()
+        {
+            _buttonOK.ButtonClick += _buttonOKClick;
+            AddElement(_text);
+            AddElement(_buttonOK);
+        }
 
         void _buttonOKClick(object sender, EventArgs e)
         {

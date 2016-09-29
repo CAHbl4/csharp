@@ -10,7 +10,7 @@ namespace UI
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public override void Draw(int x, int y)
+        public override void Draw(int x, int y, int width, int height)
         {
             if (Active)
                 ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
@@ -19,7 +19,7 @@ namespace UI
             {
                 if (i > Height)
                     return;
-                Console.SetCursorPosition(X + x, Y + y + i);
+                Console.SetCursorPosition(Right + x, Top + y + i);
                 Console.Write(str[i + _offset]);
             }
             if (Active)
@@ -44,7 +44,7 @@ namespace UI
 
         public override void SetCursor(int x, int y)
         {
-            Console.SetCursorPosition(X + x, Y + y);
+            Console.SetCursorPosition(Right + x, Top + y);
             Console.CursorVisible = false;
         }
 

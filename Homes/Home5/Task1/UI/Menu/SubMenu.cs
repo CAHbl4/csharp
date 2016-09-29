@@ -44,7 +44,7 @@ namespace UI.Menu
         public void Draw(int x, int y)
         {
             if (_selected == null) return;
-            ConsoleUtils.ConsoleSetColors(ConsoleColors.Interactive);
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             int i = 0;
             foreach (MenuItem menuItem in _items)
             {
@@ -53,7 +53,7 @@ namespace UI.Menu
                     ConsoleUtils.ConsoleSetColors(ConsoleColors.ActiveInverted);
                 Console.Write($" {menuItem.Text.PadRight(Width)} ");
                 if (menuItem == _selected)
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Interactive);
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             }
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
         }

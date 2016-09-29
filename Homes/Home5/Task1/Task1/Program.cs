@@ -6,7 +6,7 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            Form form = new MainForm();
+            Form form = new MainForm() {Title = "Demo Forms App", HasBorder = false};
 
             form.Init();
             form.Execute();

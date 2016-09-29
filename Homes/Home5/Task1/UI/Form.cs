@@ -42,18 +42,29 @@ namespace UI
         {
             int x = (Console.WindowWidth - Width) / 2;
             int y = (Console.WindowHeight - Height) / 2;
+            int width = Width;
+            int height = Height;
             Console.Clear();
             if (HasBorder)
             {
-                --x;
-                --y;
                 ConsoleUtils.DrawBorder(x, y, Width, Height);
-                Console.SetCursorPosition(x + (Width - Title.Length) / 2 - 1, y);
-                Console.Write($" {Title} ");
+                if (Title != null)
+                {
+                    Console.SetCursorPosition(x + (Width - Title.Length) / 2 - 1, y);
+                    Console.Write($" {Title} ");
+                }
+                x++;
+                y++;
+                width -= 2;
+                height -= 2;
+            }
+            else
+            {
+                if (Title != null) Console.Title = Title;
             }
             foreach (IElement element in _elements)
                 if (element.Visible)
-                    element.Draw(x, y);
+                    element.Draw(x, y, width, height);
             _elements[_active].SetCursor(x, y);
         }
 
