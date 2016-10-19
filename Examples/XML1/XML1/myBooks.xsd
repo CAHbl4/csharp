@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<schema id="myBooks"
+    targetNamespace="http://tempuri.org/myBooks.xsd"
+    elementFormDefault="qualified"    
+    xmlns:mstns="http://tempuri.org/myBooks.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+>
+  <element name="books">
+    <complexType>
+      <sequence>
+        <element name="book" type="mstns:Book" minOccurs="1" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+  <complexType name="Book">
+   
+    <sequence>
+      <element name="author" type="string"/>
+      <element name="title" type="string"/>
+      <element name="date" type="string"/>
+      <element name="pages" type="mstns:Pages"/>
+      
+    </sequence>
+     <attribute name="janre" type="string" default="Сказка" use="optional"/>
+  </complexType>
+  <simpleType name="Pages">
+    <restriction base="int">
+      <minInclusive value="10"/>
+    </restriction>
+  </simpleType>
+</schema>

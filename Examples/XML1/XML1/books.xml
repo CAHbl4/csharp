@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<books xmlns="http://tempuri.org/myBooks.xsd">
+  <book janre="Роман">        
+    <author> Толстой Л.Н.</author> 
+    <title>Война и мир</title>  
+    <date>20.02.2000</date>
+    <pages>1200</pages>
+  </book>
+  <book janre="Фантастика">    
+    <author> Лукьяненко С.</author>
+    <title>Ночной дозор</title>   
+    <date>15.05.2010</date>
+    <pages>700</pages>
+  </book>
+  <book janre="Исторический детектив">
+    <author> Акунин Б.</author>
+    <title>Черный город</title>
+    <date>17.12.2015</date>
+    <pages>500</pages>
+  </book>
+</books>
