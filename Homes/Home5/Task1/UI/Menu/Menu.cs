@@ -25,9 +25,9 @@ namespace UI.Menu
                 if (menuItem == _selected)
                     ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             }
-            Console.Write(new string(' ',width - Console.CursorLeft +x));
+            Console.Write(new string(' ', width - Console.CursorLeft + x));
             ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
-            _selected?.Draw(selectedOffset, y+1);
+            _selected?.Draw(selectedOffset, y + 1);
         }
 
         public override void SetCursor(int x, int y)

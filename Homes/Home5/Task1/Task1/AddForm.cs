@@ -13,6 +13,10 @@ namespace Task1
         readonly Label _text2 = new Label {Right = 1, Top = 2, Enabled = false, Height = 1, Width = 8, Text = "Surname"}
             ;
 
+        readonly RadioButton _radio1 = new RadioButton {Right = 1, Top = 3, Enabled = true, Text = "Radio1"};
+        readonly CheckBox _check1 = new CheckBox {Right = 1, Top = 4, Enabled = true, Text = "Checkbox1"};
+        readonly RadioButton _radio2 = new RadioButton {Right = 1, Top = 5, Enabled = true, Text = "Radio2"};
+
         readonly Button _buttonOK = new Button("OK") {Right = 12, Top = 12};
         readonly Button _buttonCancel = new Button("Cancel") {Right = 17, Top = 12};
 
@@ -25,6 +29,9 @@ namespace Task1
             AddElement(_edit1);
             AddElement(_text2);
             AddElement(_edit2);
+            AddElement(_radio1);
+            AddElement(_check1);
+            AddElement(_radio2);
             AddElement(_buttonOK);
             AddElement(_buttonCancel);
         }

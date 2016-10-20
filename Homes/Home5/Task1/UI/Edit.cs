@@ -22,6 +22,8 @@ namespace UI
         public int Width { get; set; }
         public int MaxLength { get; set; }
 
+        public event EventHandler<EventArgs> ValueChanged;
+
         public override void Draw(int x, int y, int width, int height)
         {
             Console.SetCursorPosition(Right + x, Top + y);
@@ -45,11 +47,12 @@ namespace UI
             if (_value.Length >= MaxLength) return;
             _value.Insert(_cursorPosition + _offset, c);
             CursorRight();
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         void CursorLeft()
         {
-            if ((_cursorPosition == 0) && (_offset > 0))
+            if ((_cursorPosition <= 1) && (_offset > 0))
                 _offset--;
             else if (_cursorPosition > 0)
                 _cursorPosition--;

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace UI
 {
-    public class Form
+    public class Form: IContainer
     {
         readonly List<IElement> _elements = new List<IElement>();
         int _active;
@@ -25,7 +25,19 @@ namespace UI
 
         public void AddElement(IElement element)
         {
+            if (element == null) return;
             _elements.Add(element);
+            element.Parrent = this;
+        }
+
+        public void RemoveElement(IElement element)
+        {
+            if (element == null) return;
+            foreach (IElement el in _elements)
+            {
+                if (element == el)
+                    _elements.Remove(element);
+            }
         }
 
         public void Init()
@@ -143,5 +155,7 @@ namespace UI
             _active = index;
             _elements[_active].Active = true;
         }
+
+        public ICollection<IElement> Container => _elements.ToArray();
     }
 }

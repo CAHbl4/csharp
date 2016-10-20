@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicElement.cs" />
+    <Compile Include="CheckBox.cs" />
     <Compile Include="ConsoleColors.cs" />
     <Compile Include="ConsoleUtils.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Edit.cs" />
+    <Compile Include="IContainer.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Menu\Menu.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Menu\SubMenu.cs" />
     <Compile Include="Form.cs" />
+    <Compile Include="RadioButton.cs" />
     <Compile Include="SelectDirection.cs" />
   </ItemGroup>
   <ItemGroup />

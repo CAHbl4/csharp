@@ -12,5 +12,7 @@ namespace UI
         void Draw(int x, int y, int width, int height);
         bool OnKeyPress(ConsoleKeyInfo cki);
         void SetCursor(int x, int y);
+
+        IContainer Parrent { get; set; }
     }
 }

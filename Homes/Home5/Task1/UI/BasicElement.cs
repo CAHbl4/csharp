@@ -18,5 +18,6 @@ namespace UI
         public abstract void Draw(int x, int y, int width, int height);
         public abstract bool OnKeyPress(ConsoleKeyInfo cki);
         public abstract void SetCursor(int x, int y);
+        public IContainer Parrent { get; set; }
     }
 }

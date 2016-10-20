@@ -9,8 +9,6 @@ namespace UI.Menu
         readonly List<MenuItem> _items = new List<MenuItem>();
         MenuItem _selected;
 
-        public event EventHandler<EventArgs> SubMenuClick;
-
         public SubMenu(string text = "")
         {
             Text = text;
@@ -21,6 +19,8 @@ namespace UI.Menu
         public string Text { get; set; }
 
         public int Width => _items.Max(x => x.Text.Length);
+
+        public event EventHandler<EventArgs> SubMenuClick;
 
         public void AddItem(MenuItem item)
         {
