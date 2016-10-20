@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Корневой элемент-->
+<books xmlns:tns="http://tempuri.org/MyBooksSchema.xsd">
+
+  <book janre="Роман">    <!--ganre - атрибут тега book-->
+    <author>Толстой Л.Н.</author>
+    <title>Война и мир</title>
+    <data>20.02.2000</data>
+    <page>1200</page>
+  </book>
+
+  <book janre="Фантастика">
+    <author>Лукьяненко С.</author>
+    <title>Ночной дозор</title>
+    <data>15.05.2010</data>
+    <page>700</page>
+  </book>
+
+  <book janre="Исторический детектив">
+    <author>Акунин Б.</author>
+    <title>Черный город</title>
+    <data>17.12.2015</data>
+    <page>500</page>
+
+  </book>
+
+</books>
+
