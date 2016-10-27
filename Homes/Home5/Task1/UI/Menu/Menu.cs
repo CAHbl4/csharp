@@ -58,6 +58,9 @@ namespace UI.Menu
                     else
                         _selected.Execute();
                     return true;
+                case ConsoleKey.Escape:
+                    _selected.Deselect();
+                    return true;
             }
             return false;
         }

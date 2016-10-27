@@ -9,6 +9,11 @@ namespace UI.Menu
         readonly List<MenuItem> _items = new List<MenuItem>();
         MenuItem _selected;
 
+        public void Deselect()
+        {
+            _selected = null;
+        }
+
         public SubMenu(string text = "")
         {
             Text = text;
