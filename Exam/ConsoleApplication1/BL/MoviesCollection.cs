@@ -45,6 +45,9 @@ namespace BL
             collection.Clear();
         }
 
+        public int Count => collection.Count;
+        
+
         public T[] ToArray()
         {
             return collection.ToArray();

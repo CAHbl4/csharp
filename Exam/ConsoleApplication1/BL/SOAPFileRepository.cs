@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 
 namespace BL
@@ -13,20 +14,19 @@ namespace BL
             this.filePath = filePath;
         }
 
-        public void Save(AbstractMovie[] movies)
+        public void Save(IEnumerable<AbstractMovie> movies)
         {
             using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
-                foreach (AbstractMovie movie in movies)
-                    formatter.Serialize(stream, movie);
+                formatter.Serialize(stream, movies);
             }
         }
 
-        public AbstractMovie[] Load()
+        public IEnumerable<AbstractMovie> Load()
         {
             using (FileStream stream = new FileStream(filePath, FileMode.Open))
             {
-                return (AbstractMovie[]) formatter.Deserialize(stream);
+                return (IEnumerable<AbstractMovie>) formatter.Deserialize(stream);
             }
         }
     }

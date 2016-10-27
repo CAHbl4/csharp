@@ -14,21 +14,18 @@ namespace BL
             this.filePath = filePath;
         }
 
-        public void Save(AbstractMovie[] movies)
+        public void Save(IEnumerable<AbstractMovie> movies)
         {
-            if (movies.Length == 0) return;
             if (!File.Exists(filePath))
                 File.Create(filePath);
             using (StreamWriter writer = new StreamWriter(File.OpenWrite(filePath)))
             {
                 foreach (AbstractMovie movie in movies)
-                {
                     writer.Write(Serialize(movie));
-                }
             }
         }
 
-        public AbstractMovie[] Load()
+        public IEnumerable<AbstractMovie> Load()
         {
             List<AbstractMovie> result = new List<AbstractMovie>();
             using (StreamReader reader = new StreamReader(File.OpenRead(filePath)))

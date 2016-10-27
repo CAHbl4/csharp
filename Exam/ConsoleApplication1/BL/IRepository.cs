@@ -1,10 +1,11 @@
-﻿using System.Xml.Linq;
+﻿using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace BL
 {
     public interface IRepository
     {
-        void Save(AbstractMovie[] movies);
-        AbstractMovie[] Load();
+        void Save(IEnumerable<AbstractMovie> movies);
+        IEnumerable<AbstractMovie> Load();
     }
 }
