@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="books">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="book">
+          <xs:complexType>
+            <xs:sequence>  <!--дочерние элементы должны располагаться в определенной последовательности-->
+              <xs:choice maxOccurs="unbounded">
+                <xs:element name="autor" type="xs:string" />
+                <xs:element name="title" type="xs:string" />
+                <xs:element name="data" type="xs:string" />
+                <xs:element name="page" type="xs:unsignedShort" />
+              </xs:choice>
+            </xs:sequence>  <!--дочерние элементы должны располагаться в определенной последовательности-->
+            <xs:attribute name="janre" type="xs:string" use="required" /> <!--required - обязательный атрибут-->
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

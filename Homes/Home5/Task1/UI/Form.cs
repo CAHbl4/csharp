@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace UI
 {
-    public class Form
+    public class Form: IContainer
     {
         readonly List<IElement> _elements = new List<IElement>();
         int _active;
@@ -25,7 +25,19 @@ namespace UI
 
         public void AddElement(IElement element)
         {
+            if (element == null) return;
             _elements.Add(element);
+            element.Parrent = this;
+        }
+
+        public void RemoveElement(IElement element)
+        {
+            if (element == null) return;
+            foreach (IElement el in _elements)
+            {
+                if (element == el)
+                    _elements.Remove(element);
+            }
         }
 
         public void Init()
@@ -42,18 +54,29 @@ namespace UI
         {
             int x = (Console.WindowWidth - Width) / 2;
             int y = (Console.WindowHeight - Height) / 2;
+            int width = Width;
+            int height = Height;
             Console.Clear();
             if (HasBorder)
             {
-                --x;
-                --y;
                 ConsoleUtils.DrawBorder(x, y, Width, Height);
-                Console.SetCursorPosition(x + (Width - Title.Length) / 2 - 1, y);
-                Console.Write($" {Title} ");
+                if (Title != null)
+                {
+                    Console.SetCursorPosition(x + (Width - Title.Length) / 2 - 1, y);
+                    Console.Write($" {Title} ");
+                }
+                x++;
+                y++;
+                width -= 2;
+                height -= 2;
+            }
+            else
+            {
+                if (Title != null) Console.Title = Title;
             }
             foreach (IElement element in _elements)
                 if (element.Visible)
-                    element.Draw(x, y);
+                    element.Draw(x, y, width, height);
             _elements[_active].SetCursor(x, y);
         }
 
@@ -67,12 +90,20 @@ namespace UI
             while (true)
             {
                 if (_dispose)
-                    break;
+                    return;
+
                 Draw();
+
                 ConsoleKeyInfo cki = Console.ReadKey(false);
+
                 if ((cki.Modifiers == ConsoleModifiers.Alt) && (cki.Key == ConsoleKey.X))
-                    break;
+                {
+                    Dispose();
+                    continue;
+                }
+
                 if (_elements[_active].OnKeyPress(cki)) continue;
+
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
@@ -113,15 +144,18 @@ namespace UI
                     return;
                 Select(direction == SelectDirection.Next
                     ? _elements.FindIndex(_active + 1, x => x.Enabled)
-                    : _elements.FindLastIndex(_active - 1, _active - 1, x => x.Enabled));
+                    : _elements.FindLastIndex(_active - 1, _active, x => x.Enabled));
             }
         }
 
         public void Select(int index)
         {
+            if (index < 0) return;
             _elements[_active].Active = false;
             _active = index;
             _elements[_active].Active = true;
         }
+
+        public ICollection<IElement> Container => _elements.ToArray();
     }
 }

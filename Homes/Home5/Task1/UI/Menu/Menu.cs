@@ -6,30 +6,28 @@ namespace UI.Menu
 {
     public class Menu : BasicElement
     {
-        readonly List<SubMenu> _items;
+        readonly List<SubMenu> _items = new List<SubMenu>();
         SubMenu _selected;
 
-        public Menu()
+        public override void Draw(int x, int y, int width, int height)
         {
-            _items = new List<SubMenu>();
-        }
-
-        public override void Draw(int x, int y)
-        {
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             Console.SetCursorPosition(x, y);
+            int selectedOffset = x;
             foreach (SubMenu menuItem in _items)
             {
                 if (menuItem == _selected)
                 {
-                    x = Console.CursorLeft;
-                    y = Console.CursorTop + 1;
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Active);
+                    selectedOffset = Console.CursorLeft;
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.ActiveInverted);
                 }
                 Console.Write($" {menuItem} ");
                 if (menuItem == _selected)
-                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+                    ConsoleUtils.ConsoleSetColors(ConsoleColors.Inverted);
             }
-            _selected?.Draw(x, y);
+            Console.Write(new string(' ', width - Console.CursorLeft + x));
+            ConsoleUtils.ConsoleSetColors(ConsoleColors.Default);
+            _selected?.Draw(selectedOffset, y + 1);
         }
 
         public override void SetCursor(int x, int y)
@@ -60,6 +58,9 @@ namespace UI.Menu
                     else
                         _selected.Execute();
                     return true;
+                case ConsoleKey.Escape:
+                    _selected.Deselect();
+                    return true;
             }
             return false;
         }
@@ -69,11 +70,6 @@ namespace UI.Menu
             _items.Add(item);
             if (_items.Count == 1)
                 _selected = _items[0];
-        }
-
-        public void AddItem(string text, Action action = null)
-        {
-            AddItem(new SubMenu(text, action));
         }
 
         public void SelectNext()
